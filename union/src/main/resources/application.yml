@@ -1,0 +1,62 @@
+server:
+  port: 9080
+spring:
+  datasource:
+    name: union
+    url: jdbc:mysql://127.0.0.1:3306/dnf_union?useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 使用druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    #初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
+    initial-size: 5
+    # 最大和最小连接池数量
+    max-active: 30
+    min-idle: 5
+    #获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，如果需要可以通过配置useUnfairLock属性为true使用非公平锁。
+    max-wait: 60000
+    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    time-between-eviction-runs-millis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    min-evictable-idle-time-millis: 300000
+    # 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
+    validation-query: SELECT 1 FROM DUAL
+    #建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+    test-while-idle: true
+    #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+    test-on-borrow: false
+    #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+    test-on-return: false
+    #是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。
+    pool-prepared-statements: false
+    #通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall
+    filters: stat, wall
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    #max-pool-prepared-statement-per-connection-size: 20
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    # 合并多个DruidDataSource的监控数据
+    use-global-data-source-stat: true
+
+logging:
+  level:
+    root: INFO
+    com:
+      tx:
+        union: debug
+      ibatis: debug
+    org:
+      springframework:
+        web: DEBUG
+        jdbc: DEBUG
+
+
+mybatis-plus:
+  mapper-locations: classpath:/mappers/*.xml
+  # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名
+  type-aliases-package: com.tx.union.pojo.entity
+  # 数据库表与实体类的驼峰命名自动转换
+  configuration:
+    map-underscore-to-camel-case: true
+
