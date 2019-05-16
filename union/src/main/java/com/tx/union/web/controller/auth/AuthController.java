@@ -29,4 +29,9 @@ public class AuthController {
         return authService.list(page);
     }
 
+
+    @PostMapping("/dtoList")
+    public Object DTOList(){
+        return authService.listAdminRolePrivilege();
+    }
 }

@@ -2,10 +2,12 @@ package com.tx.union.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tx.union.dao.AdminMapper;
+import com.tx.union.pojo.dto.AdminDTO;
 import com.tx.union.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,5 +28,10 @@ public class AuthServiceImpl implements AuthService {
         // 不查询总记录数
         // page.setSearchCount(false);
         return page.setRecords(adminMapper.selectAdminRole(page));
+    }
+
+    @Override
+    public List<AdminDTO> listAdminRolePrivilege() {
+        return adminMapper.selectAdminRolePrivilege();
     }
 }

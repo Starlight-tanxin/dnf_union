@@ -1,3 +1,4 @@
+## 使用阿里的druid连接池有bug 在使用localDateTime类型时  ##
 server:
   port: 9080
 spring:
