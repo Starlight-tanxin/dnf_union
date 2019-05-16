@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -12,20 +13,20 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 角色表
+ * 管理员表
  * </p>
  *
- * @author ${author}
+ * @author tanxin
  * @since 2019-05-15
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_role")
-public class Role extends Model<Role> {
+@TableName("tb_admin")
+public class Admin extends Model<Admin> {
 
-private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 主键
@@ -33,21 +34,56 @@ private static final long serialVersionUID=1L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 用户名
+     */
+    private String username;
+
+    private String password;
 
     /**
-     * 角色名
+     * 邮箱
      */
-    private String roleName;
+    private String email;
 
     /**
-     * 角色介绍
+     * 手机号
      */
-    private String description;
+    private String mobile;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
+
+    /**
+     * 真实姓名
+     */
+    private String realName;
+
+    /**
+     * 性别
+     * 0 - 女
+     * 1 - 男
+     */
+    private Integer sex;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 激活状态
+     * 0 - 未激活
+     * 1 - 激活
+     */
+    private Boolean activation;
 
     /**
      * 是否删除
-0 - 否
-1 - 是
+     * 0 - 否
+     * 1 - 是
      */
     private Boolean isDeleted;
 
@@ -55,10 +91,5 @@ private static final long serialVersionUID=1L;
 
     private LocalDateTime lastUpdateTime;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
 
 }

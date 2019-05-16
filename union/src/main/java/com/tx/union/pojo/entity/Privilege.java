@@ -1,34 +1,60 @@
 package com.tx.union.pojo.entity;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
+ * <p>
  * 权限表
- * @author tanxin
- * @date 2019/5/14
+ * </p>
+ *
+ * @author ${author}
+ * @since 2019-05-15
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Privilege implements Serializable {
+@TableName("tb_privilege")
+public class Privilege extends Model<Privilege> {
 
-    private static final long serialVersionUID = -1284882842700053057L;
+    private static final long serialVersionUID = 1L;
 
-    Integer id;
+    /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    String name;
+    /**
+     * 权限名
+     */
+    private String name;
 
-    String url;
+    /**
+     * 权限请求地址
+     */
+    private String url;
 
-    Boolean isDeleted;
+    private Boolean isDeleted;
 
-    LocalDateTime createdTime;
+    private LocalDateTime createdTime;
 
-    LocalDateTime lastUpdateTime;
+    private LocalDateTime lastUpdateTime;
+
+
+    @Override
+    protected Serializable pkVal() {
+        return null;
+    }
+
 }

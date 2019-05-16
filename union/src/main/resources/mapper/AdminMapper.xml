@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tx.union.dao.AdminMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tx.union.pojo.entity.Admin">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="mobile" property="mobile"/>
+        <result column="nickname" property="nickname"/>
+        <result column="real_name" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="avatar" property="avatar"/>
+        <result column="activation" property="activation"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+    </resultMap>
+
+
+    <select id="selectAdminRole" resultType="java.util.Map">
+        SELECT
+            t1.id,
+            t1.username,
+            t1.nickname,
+            t1.real_name ,
+            t1.created_time ,
+            t3.id AS roleId,
+            t3.role_name,
+            t5.id AS privilegeId,
+            t5.url,
+            t5.`name`
+        FROM
+            tb_admin t1
+            INNER JOIN tb_admin_has_role t2 ON t2.admin_id = t1.id
+            INNER JOIN tb_role t3 ON t3.id = t2.role_id
+            INNER JOIN tb_role_has_privilege t4 ON t4.role_id = t3.id
+            INNER JOIN tb_privilege t5 ON t5.id = t4.privilege_id
+    </select>
+
+</mapper>

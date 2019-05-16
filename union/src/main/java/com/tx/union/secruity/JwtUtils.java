@@ -7,7 +7,9 @@ import com.auth0.jwt.impl.PublicClaims;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.google.common.base.Strings;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -68,7 +70,10 @@ public class JwtUtils {
     }
 
     /**
-     * 验证jwt，并返回数据
+     * 检验token 获取数据
+     *
+     * @param token
+     * @return
      */
     private static Map<String, String> verifyToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET);
@@ -91,15 +96,46 @@ public class JwtUtils {
     }
 
     /**
-     * 获取token
-     * @param id 用户id
+     * 判断token是否过期
+     *
+     * @param token
+     * @return true - 过期  false - 未过期
+     */
+    private static boolean isTokenExpired(String token) {
+        long now = new Date().getTime();
+        Map<String, String> dataMap = verifyToken(token);
+        String exp = dataMap.get(PublicClaims.EXPIRES_AT);
+        return now > Long.valueOf(exp);
+    }
+
+    /**
+     * 获取Token
+     *
+     * @param request HttpServletRequest
+     * @return Token
+     */
+    public static String getToken(HttpServletRequest request) {
+        String header = request.getHeader(TOKEN_HEADER);
+        if (Strings.isNullOrEmpty(header)) {
+            header = request.getParameter(TOKEN_HEADER);
+        }
+        if (header != null && header.startsWith(TOKEN_PREFIX)) {
+            return header.substring(TOKEN_PREFIX.length());
+        }
+        return null;
+    }
+
+    /**
+     * 生成token
+     *
+     * @param id       用户id
      * @param username 用户名
      * @return
      */
-    public static String getToken(Integer id,String username) {
-        Map<String,String> claims = new HashMap<>();
-        claims.put("id",Integer.toString(id));
-        claims.put("username",username);
+    public static String generateToken(Integer id, String username) {
+        Map<String, String> claims = new HashMap<>();
+        claims.put("id", Integer.toString(id));
+        claims.put("username", username);
         return TOKEN_PREFIX + createToken(claims);
     }
 

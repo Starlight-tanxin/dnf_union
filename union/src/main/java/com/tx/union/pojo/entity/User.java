@@ -1,7 +1,11 @@
 package com.tx.union.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,17 +20,24 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class User implements Serializable {
+@TableName("tb_user")
+public class User extends Model<User> {
 
-    private static final long serialVersionUID = 7687953172098915048L;
+    private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
 
     /**
      * 用户名
      */
     private String username;
+
+    private String password;
 
     /**
      * 邮箱
