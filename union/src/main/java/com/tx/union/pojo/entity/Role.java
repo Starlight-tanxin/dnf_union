@@ -1,8 +1,6 @@
 package com.tx.union.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -37,6 +35,7 @@ private static final long serialVersionUID=1L;
     /**
      * 角色名
      */
+    @TableField(condition = SqlCondition.LIKE_RIGHT)
     private String roleName;
 
     /**
@@ -51,6 +50,7 @@ private static final long serialVersionUID=1L;
      */
     private Boolean isDeleted;
 
+    @TableField(condition = SqlCondition.EQUAL)
     private LocalDateTime createdTime;
 
     private LocalDateTime lastUpdateTime;

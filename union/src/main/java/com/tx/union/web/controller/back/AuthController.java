@@ -1,6 +1,8 @@
-package com.tx.union.web.controller.auth;
+package com.tx.union.web.controller.back;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tx.union.core.Result;
+import com.tx.union.pojo.param.AuthLoginParam;
 import com.tx.union.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +19,7 @@ import java.util.Map;
  */
 @Validated
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/back/auth")
 public class AuthController {
 
     @Autowired
@@ -33,5 +35,10 @@ public class AuthController {
     @PostMapping("/dtoList")
     public Object DTOList(){
         return authService.listAdminRolePrivilege();
+    }
+
+    @PostMapping("/login")
+    public Result<?> login(@Validated AuthLoginParam param){
+        return null;
     }
 }

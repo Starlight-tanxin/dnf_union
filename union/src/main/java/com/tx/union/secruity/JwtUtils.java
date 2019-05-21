@@ -41,6 +41,10 @@ public class JwtUtils {
     private static final String ISSUER = "tx";
     // 主题
     private static final String SUBJECT = "user";
+    // 用户id
+    private static final String USER_ID = "user_Id";
+    // 用户名
+    private static final String USERNAME = "username";
 
 
     /**
@@ -101,11 +105,33 @@ public class JwtUtils {
      * @param token
      * @return true - 过期  false - 未过期
      */
-    private static boolean isTokenExpired(String token) {
+    public static boolean isTokenExpired(String token) {
         long now = new Date().getTime();
         Map<String, String> dataMap = verifyToken(token);
         String exp = dataMap.get(PublicClaims.EXPIRES_AT);
         return now > Long.valueOf(exp);
+    }
+
+    /**
+     * 获取用户名
+     *
+     * @param token
+     * @return
+     */
+    public static String getUsername(String token) {
+        Map<String, String> dataMap = verifyToken(token);
+        return dataMap.get(USERNAME);
+    }
+
+    /**
+     * 获得用户id
+     *
+     * @param token
+     * @return
+     */
+    public static Integer getUserId(String token) {
+        Map<String, String> dataMap = verifyToken(token);
+        return Integer.valueOf(dataMap.get(USER_ID));
     }
 
     /**
@@ -134,9 +160,18 @@ public class JwtUtils {
      */
     public static String generateToken(Integer id, String username) {
         Map<String, String> claims = new HashMap<>();
-        claims.put("id", Integer.toString(id));
-        claims.put("username", username);
+        claims.put(USER_ID, Integer.toString(id));
+        claims.put(USERNAME, username);
         return TOKEN_PREFIX + createToken(claims);
+    }
+
+    /**
+     * 验证token是否有效
+     * @param token
+     * @return
+     */
+    public static boolean validateToken(String token) {
+        return isTokenExpired(token);
     }
 
 }

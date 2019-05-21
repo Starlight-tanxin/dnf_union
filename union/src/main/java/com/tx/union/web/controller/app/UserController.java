@@ -1,4 +1,4 @@
-package com.tx.union.web.controller;
+package com.tx.union.web.controller.app;
 
 import com.tx.union.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019/5/14
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/app/user")
 public class UserController {
 
     @Autowired

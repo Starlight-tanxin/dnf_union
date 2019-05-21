@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
         // page.setOptimizeCountSql(false);
         // 不查询总记录数
         // page.setSearchCount(false);
-        return page.setRecords(adminMapper.selectAdminRole(page));
+        return page.setRecords(adminMapper.selectAdminRole(page.setDesc("created_time")));
     }
 
     @Override

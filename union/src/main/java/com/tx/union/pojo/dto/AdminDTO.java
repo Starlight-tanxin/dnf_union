@@ -31,4 +31,5 @@ public class AdminDTO {
     private LocalDateTime lastUpdateTime;
 
     List<RoleDTO> roleList;
+
 }
