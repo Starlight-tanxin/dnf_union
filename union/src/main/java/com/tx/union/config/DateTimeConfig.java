@@ -37,9 +37,12 @@ public class DateTimeConfig {
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateFormatter.DATE_TIME));
         javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateFormatter.DATE));
         javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateFormatter.TIME));
+        // setSerializationInclusion(JsonInclude.Include.NON_NULL) json返回对象时，忽略null的字段（null值的字段不会返回）
+        // registerModule(javaTimeModule) 注册时间转换模型
         return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).registerModule(javaTimeModule);
     }
 
+    // *** 注册转换器  **//
     @Bean
     public Converter<String, LocalDateTime> localDateTimeConverter() {
         return new Converter<String, LocalDateTime>() {
