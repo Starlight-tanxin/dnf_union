@@ -165,6 +165,21 @@ public class JwtUtils {
         return TOKEN_PREFIX + createToken(claims);
     }
 
+
+    /**
+     * 刷新token
+     *
+     * @param token
+     * @return
+     */
+    public static String refreshToken(String token) {
+        Map<String, String> map = verifyToken(token);
+        Map<String, String> claims = new HashMap<>();
+        claims.put(USER_ID, map.get(USER_ID));
+        claims.put(USERNAME, map.get(USERNAME));
+        return createToken(claims);
+    }
+
     /**
      * 验证token是否有效
      * @param token
